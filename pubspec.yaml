@@ -14,6 +14,13 @@ dependencies:
   bloc: ^3.0.0
   flutter_bloc: ^3.1.0
   flutter_svg: ^0.15.0
+  intl: ^0.16.1
+  custom_radio:
+    path: ../custom_radio
+  firebase_core: ^0.4.0+9
+  firebase_analytics: ^5.0.2
+  firebase_auth: ^0.14.0+5
+  cloud_firestore: ^0.12.9+5
 
 dev_dependencies:
   flutter_test:
