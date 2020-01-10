@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:hackweek/data/datetime_utils.dart';
 import 'package:hackweek/data/clock_utils.dart';
@@ -254,6 +256,17 @@ class HandsPainter extends CustomPainter {
     canvas.drawLine(Offset(size.width / 2, size.height / 2), minute, _mPaint);
     canvas.drawCircle(hour, psize, _hPaint);
     canvas.drawLine(Offset(size.width / 2, size.height / 2), hour, _hPaint);
+
+    final pStyle = ParagraphStyle(textAlign: TextAlign.center);
+    final hpBuilder = ParagraphBuilder(pStyle)
+      ..addText(ClockUtils.hourifyc(hour, size).toString());
+    final mpBuilder = ParagraphBuilder(pStyle)
+      ..addText(ClockUtils.minutifyc(minute, size).toString());
+    final hText = hpBuilder.build()..layout(ParagraphConstraints(width: 40));
+    final mText = mpBuilder.build()..layout(ParagraphConstraints(width: 40));
+
+    canvas.drawParagraph(hText, Offset(hour.dx - hText.width / 2, hour.dy - hText.height / 2));
+    canvas.drawParagraph(mText, Offset(minute.dx - mText.width / 2, minute.dy - mText.height / 2));
   }
 
   @override
