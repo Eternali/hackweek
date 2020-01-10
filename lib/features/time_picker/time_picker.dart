@@ -258,8 +258,9 @@ class HandsPainter extends CustomPainter {
     canvas.drawLine(Offset(size.width / 2, size.height / 2), hour, _hPaint);
 
     final pStyle = ParagraphStyle(textAlign: TextAlign.center);
+    final h = ClockUtils.hourifyc(hour, size);
     final hpBuilder = ParagraphBuilder(pStyle)
-      ..addText(ClockUtils.hourifyc(hour, size).toString());
+      ..addText((h == 0 ? 12 : h).toString());
     final mpBuilder = ParagraphBuilder(pStyle)
       ..addText(ClockUtils.minutifyc(minute, size).toString());
     final hText = hpBuilder.build()..layout(ParagraphConstraints(width: 40));
