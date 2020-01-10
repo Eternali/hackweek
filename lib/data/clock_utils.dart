@@ -8,18 +8,18 @@ class ClockUtils {
     // Return time formatted like 'Jan 1, 2:30 PM'.
     if (now == null) return DateFormat.MMMd().add_jm().format(time);
     else if (now.isAfter(time)) return '';
-    String str = time.day > now.day ? 'Today' : 'Tomorrow';
+    String str = time.day > now.day ? 'Tomorrow' : 'Today';
     return '$str at ${DateFormat.jm().format(time)}';
   }
 
   /// Map a [raw] position to a set of dimensions specified by [constraints].
   static Offset polarize(Offset raw, Size size) {
     final x = raw.dx - size.width / 2;
-    final y = raw.dy - size.height / 2;
-    return Offset(
-      sqrt(pow(x, 2) + pow(y, 2)),
-      atan(y / x),
-    );
+    final y = -(raw.dy - size.height / 2);
+    double theta = atan(y / x);
+    if (x < 0) theta = pi + theta;
+    else if (y < 0) theta = 2 * pi + theta;
+    return Offset(sqrt(pow(x, 2) + pow(y, 2)), theta);
   }
 
   /// Map a regularized [pos] to an offset on the current RenderBox.
@@ -32,8 +32,8 @@ class ClockUtils {
 
   /// Map polar coordinates to hour.
   static int hourify(Offset pol, Size size) {
-    int hour = 3 - (pol.dy * (6 / pi)).floor();
-    if (hour < 0) hour = 12 - hour;
+    int hour = 3 - (pol.dy * (6 / pi)).round();
+    if (hour < 0) hour = 12 + hour;
     return hour;
   }
 
@@ -42,8 +42,8 @@ class ClockUtils {
   
   /// Map polar coordinates to minute.
   static int minutify(Offset pol, Size size) {
-    int minute = 15 - (pol.dy * (30 / pi)).floor();
-    if (minute < 0) minute = 60 - minute;
+    int minute = 15 - (pol.dy * (30 / pi)).round();
+    if (minute < 0) minute = 60 + minute;
     return minute;
   }
 
@@ -69,7 +69,7 @@ class ClockUtils {
     double theta = (15 - (m % 60)).toDouble();
     if (theta < 0) theta = 60 + theta;
     theta *= (pi / 30);
-    double rad = sqrt(pow(size.width * 0.36, 2) + pow(size.height * 0.36, 2));
+    double rad = sqrt(pow(size.width * 0.34, 2) + pow(size.height * 0.34, 2));
     return Offset(rad, theta);
   }
 

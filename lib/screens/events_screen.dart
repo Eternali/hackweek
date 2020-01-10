@@ -74,7 +74,7 @@ class _EventsScreenState extends State<EventsScreen> {
                     builder: (context, snapshot) {
                       return ListView(
                         shrinkWrap: true,
-                        children: snapshot.data.map((e) => Container(
+                        children: snapshot.data?.map((e) => Container(
                           margin: const EdgeInsets.all(8),
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
@@ -96,16 +96,27 @@ class _EventsScreenState extends State<EventsScreen> {
                               ),
                               Container(
                                 alignment: Alignment.centerRight,
-                                child: Text(
-                                  ClockUtils.strTime(e.time),
-                                  style: theme.textTheme.textStyle.copyWith(
-                                    color: theme.scaffoldBackgroundColor,
-                                  ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      ClockUtils.strTime(e.time),
+                                      style: theme.textTheme.textStyle.copyWith(
+                                        color: theme.scaffoldBackgroundColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      '< 1 km',
+                                      style: theme.textTheme.textStyle.copyWith(
+                                        color: theme.scaffoldBackgroundColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
-                        )).toList(),
+                        ))?.toList() ?? [],
                       );
                     },
                   ),

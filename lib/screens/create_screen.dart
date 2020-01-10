@@ -146,6 +146,9 @@ class _CreateScreenState extends State<CreateScreen> {
                         padding: const EdgeInsets.all(8),
                         controller: _descController,
                         placeholder: 'EVENT DESCRIPTION',
+                        placeholderStyle: TextStyle(
+                          color: CupertinoColors.lightBackgroundGray,
+                        ),
                         enableSuggestions: true,
                         autocorrect: true,
                         decoration: BoxDecoration(
@@ -161,14 +164,18 @@ class _CreateScreenState extends State<CreateScreen> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.all(16),
                         child: TimePicker(
                           time: _time,
-                          isAsap: true,
-                          onChanged: (DateTime value) {
+                          isAsap: _isAsap,
+                          onChanged: ([DateTime value]) {
                             setState(() {
-                              if (value != null) _time = value;
-                              else _isAsap = !_isAsap;
+                              print(value);
+                              if (value != null) {
+                                _time = value;
+                                _isAsap = false;
+                              }
+                              else _isAsap = true;
                             });
                           }
                         ),
@@ -326,7 +333,9 @@ class _CreateScreenState extends State<CreateScreen> {
                     isAsap: _isAsap,
                     size: _size,
                     radius: _radius,
-                  ).toJson());
+                  ).toJson()).then((_) {
+                    Navigator.of(context).pushNamed('/events');
+                  });
                 }),
               ),
             ],

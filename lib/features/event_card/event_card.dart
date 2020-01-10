@@ -19,12 +19,15 @@ class EventCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Text(
-            event.description,
+            event.description + 'why',
           ),
           Column(
             children: <Widget>[
               Text(
                 event.isAsap ? 'ASAP' : ClockUtils.strTime(event.time),
+              ),
+              Text(
+                '< 1 km'
               ),
             ],
           ),
