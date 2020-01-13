@@ -4,6 +4,7 @@ import 'package:custom_radio/custom_radio.dart';
 import 'package:hackweek/data/event.dart';
 import 'package:hackweek/ui_navigator.dart';
 import 'package:hackweek/features/time_picker/time_picker.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class CreateScreen extends StatefulWidget {
   CreateScreen({Key key, this.title}) : super(key: key);
@@ -334,6 +335,7 @@ class _CreateScreenState extends State<CreateScreen> {
                     size: _size,
                     radius: _radius,
                   ).toJson()).then((_) {
+                    FlutterLocalNotificationsPlugin().show(id, title, body, notificationDetails)
                     Navigator.of(context).pushNamed('/events');
                   });
                 }),
